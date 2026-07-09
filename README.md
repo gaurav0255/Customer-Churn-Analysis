@@ -1,230 +1,254 @@
-Business Problem Statement
+1. Executive Summary
 
-Telecom company Leo is experiencing customer attrition. The company wants to:
+Customer churn is one of the biggest challenges faced by telecom companies. Every customer lost directly impacts revenue and increases customer acquisition costs. Since retaining an existing customer is considerably less expensive than acquiring a new one, organizations need intelligent systems capable of identifying customers who are likely to leave.
 
-Analyze customer behavior
-Identify high-risk customers
-Understand factors affecting churn
-Build predictive models to forecast churn
-Design customer retention strategies
-3. Project Objectives
-Primary Objectives
-Analyze customer demographics and service usage.
-Identify patterns associated with churn.
-Build machine learning models to predict customer churn.
-Evaluate model performance.
-Generate actionable business insights.
-4. Dataset Description
+This project aims to analyze customer behavior and develop an Artificial Neural Network (ANN) model capable of predicting customer churn using demographic information, subscription details, and billing data.
 
-The dataset contains customer demographic information, subscription details, billing information, and churn status.
+Through extensive Exploratory Data Analysis (EDA), data preprocessing, and ANN modeling, this project identifies important factors influencing churn and provides actionable insights that can help businesses reduce customer attrition and improve profitability.
 
-Important Features
-Feature	Description
-customerID	Unique customer ID
-gender	Male/Female
-SeniorCitizen	Whether customer is senior citizen
+2. Business Problem Statement
+
+The telecom company Leo has observed an increasing number of customers discontinuing their services and moving to competitors. The company currently lacks a data-driven mechanism to identify customers who are likely to churn.
+
+This creates several business challenges:
+
+Revenue loss due to customer attrition
+Increased marketing expenses for customer acquisition
+Reduced customer lifetime value
+Difficulty in designing targeted retention strategies
+Inability to proactively address customer dissatisfaction
+
+Therefore, the company requires a predictive system that can:
+
+Predict customers likely to churn
+Understand the factors influencing churn
+Identify high-risk customer segments
+Support proactive retention strategies
+
+This project addresses these challenges by building a machine learning-based customer churn prediction system using Artificial Neural Networks.
+
+3. Business Objectives
+
+The primary objectives of this project are:
+
+Customer Understanding
+
+Analyze customer demographics, services, and billing patterns.
+
+Churn Prediction
+
+Develop a predictive model that accurately identifies customers likely to leave.
+
+Customer Segmentation
+
+Identify high-risk customer groups.
+
+Business Decision Support
+
+Generate actionable insights for customer retention.
+
+Profitability Improvement
+
+Reduce churn and increase customer lifetime value.
+
+4. Project Goals
+
+The project aims to:
+
+✔ Understand customer behavior patterns.
+
+✔ Determine the factors affecting customer churn.
+
+✔ Build and evaluate ANN-based churn prediction models.
+
+✔ Compare different model architectures.
+
+✔ Recommend business strategies for reducing churn.
+
+5. Dataset Description
+
+The dataset contains customer information from a telecom company.
+
+Dataset Features
+Variable	Description
+customerID	Unique customer identifier
+gender	Male or Female
+SeniorCitizen	Indicates whether customer is a senior citizen
+Partner	Customer has a partner
+Dependents	Customer has dependents
 tenure	Number of months customer stayed
+PhoneService	Customer has phone service
+MultipleLines	Customer has multiple lines
 InternetService	DSL, Fiber Optic, No Internet
-MonthlyCharges	Monthly bill
-TotalCharges	Total amount spent
-PaymentMethod	Payment mode
-Churn	Target Variable
-5. Data Understanding
+Contract	Month-to-month, One Year, Two Year
+PaymentMethod	Customer payment mode
+MonthlyCharges	Monthly billing amount
+TotalCharges	Total amount paid
+Churn	Target variable
+6. Data Understanding
 
-The dataset contains information related to:
+The dataset contains four major categories of information:
 
-Demographic Features
+Demographic Information
 Gender
 Senior Citizen
-Service Features
+Partner
+Dependents
+Service Information
 Internet Service
 Phone Service
 Multiple Lines
-Financial Features
+Financial Information
 Monthly Charges
 Total Charges
 Payment Method
-Customer Relationship Features
+Customer Relationship Information
 Tenure
 Contract Type
-6. Data Preprocessing
-Step 1: Import Libraries
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-For model building:
-
-from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
-Step 2: Missing Value Handling
-
-The project identified blank values in:
-
-TotalCharges
-
-Actions performed:
-
-Checked missing values
-Converted blank values into numeric values
-Removed or handled missing records appropriately
-Why?
-
-Neural networks cannot process missing values.
-
-Step 3: Data Type Conversion
-
-Converted:
-
-TotalCharges
-
-from object datatype to numeric datatype.
-
-Step 4: Label Encoding
-
-Target Variable:
-
-Churn
-
-Converted:
-
-Original	Encoded
-Yes	1
-No	0
-
-This transformation allows the ANN model to process categorical outputs.
-
 7. Exploratory Data Analysis (EDA)
-A. Gender Distribution
-Objective
 
-Find the total number of male customers.
+EDA was performed to understand customer behavior and identify factors associated with churn.
 
-Business Insight
-Helps understand customer demographics.
-Enables gender-based retention strategies.
-B. DSL Internet Users
-Objective
-
-Find total customers using DSL service.
-
-Business Insight
-
-Different internet services show different churn patterns.
-
-Generally:
-
-Fiber users generate more revenue.
-Fiber users often exhibit higher churn rates.
-C. Female Senior Citizens using Mailed Check
-Objective
-
-Extract:
-
-Female customers
-Senior citizens
-Payment Method = Mailed Check
-Business Insight
-
-This segment often:
-
-Uses traditional payment methods
-May have higher service dissatisfaction
-Requires personalized retention programs
-D. New Customers
-
-Criteria:
-
-tenure < 10
-OR
-TotalCharges < 500
-Business Insight
-
-New customers generally:
-
-Have lower loyalty
-Are more likely to churn
-Require onboarding campaigns
-8. Data Visualization
-Churn Distribution (Pie Chart)
-Findings
+Customer Churn Distribution
+Observation
 
 Approximately:
 
 73% customers retained
 27% customers churned
-Interpretation
+Business Interpretation
 
-A churn rate of 27% is significant.
+Nearly one out of every four customers leaves the company, indicating a significant churn problem.
 
-This means:
+Gender Distribution
+Observation
 
-For every 100 customers:
+The customer base is nearly equally distributed between males and females.
 
-73 remain
-27 leave
+Business Interpretation
 
-The company is losing nearly one-fourth of its customer base.
+Gender alone is not a major indicator of customer churn.
 
-Internet Service Distribution (Bar Plot)
-Findings
+Internet Service Analysis
+Observation
 
-Customers are distributed across:
+Customers are distributed among:
 
 DSL
 Fiber Optic
 No Internet Service
-Interpretation
+Business Interpretation
 
-Fiber users:
-
-Generate higher revenue
-Frequently exhibit higher churn
+Fiber-optic customers contribute substantial revenue but often exhibit higher churn rates.
 
 Possible reasons:
 
-High pricing
-Service issues
+Expensive plans
+Service dissatisfaction
 Better competitor offerings
-9. Feature Importance Analysis
+Tenure Analysis
+Observation
 
-The project observations indicate:
+Customers with lower tenure exhibit higher churn.
 
-Tenure
+Business Interpretation
 
-Strong negative relationship with churn.
+New customers have lower loyalty and are more likely to leave.
 
-Meaning:
+Monthly Charges Analysis
+Observation
 
-Low tenure → High churn probability
-High tenure → Lower churn probability
-Total Charges
+Higher monthly charges are associated with increased churn probability.
 
-Lower spending customers tend to churn more.
+Business Interpretation
 
-Reason:
+Pricing plays a major role in customer retention.
 
-Lower engagement with company services.
+Total Charges Analysis
+Observation
 
-Internet Service
+Customers with lower lifetime spending tend to churn more.
 
-Internet service significantly affects customer behavior.
+Business Interpretation
 
-Fiber customers contribute:
+Lower engagement often leads to early customer exit.
 
-Higher revenue
-Higher churn risk
-10. Model Building
+8. Data Preprocessing
+Missing Value Treatment
 
-The project developed three ANN models.
+The variable:
 
-Model 1
-Features Used
-Tenure
-Target
+TotalCharges
+
+contained blank values.
+
+Actions performed:
+
+Identified missing values
+Converted data type
+Handled blank records appropriately
+Data Type Conversion
+
+Converted:
+
+TotalCharges
+
+from Object datatype to Numeric datatype.
+
+Target Variable Encoding
+
+The target variable:
+
 Churn
+
+was converted into binary values.
+
+Original	Encoded
+Yes	1
+No	0
+Feature Encoding
+
+Categorical variables were transformed into numerical representations using encoding techniques suitable for neural networks.
+
+Data Scaling
+
+Feature scaling was performed before model training because neural networks are sensitive to differences in feature magnitudes.
+
+Benefits:
+
+Faster convergence
+Stable gradient updates
+Better model performance
+9. Feature Engineering
+
+The following features were found to be highly informative:
+
+Tenure
+
+Represents customer loyalty.
+
+MonthlyCharges
+
+Represents recurring customer expenditure.
+
+TotalCharges
+
+Represents overall customer value.
+
+These variables significantly contribute to churn prediction.
+
+10. Model Development
+
+The project developed multiple ANN models.
+
+The data was divided into:
+
+Training Data: 80%
+Testing Data: 20%
+11. Artificial Neural Network Architecture
+Model 1
+Input Features
+Tenure
 Architecture
 
 Input Layer:
@@ -241,129 +265,85 @@ Output Layer:
 
 1 neuron
 Sigmoid activation
-Why Sigmoid?
-
-Because churn prediction is a binary classification problem.
-
-Output:
-
-0 → No Churn
-1 → Churn
-Why ReLU?
-
-Advantages:
-
-Faster training
-Solves vanishing gradient problem
-Computationally efficient
-Model 1 Performance
-
-Training Accuracy:
-
-Approximately:
-
-75%
-
-Validation Accuracy:
-
-Approximately:
-
-74-75%
-Interpretation
-
-Model learned meaningful patterns.
-
-No major overfitting observed because:
-
-Training Accuracy ≈ Validation Accuracy
-
 Model 2
-Features
+Input Features
 Tenure
 Architecture
 
 Input Layer:
 
 12 neurons
-ReLU
+ReLU activation
 
-Dropout:
+Dropout Layer:
 
 30%
 
 Hidden Layer:
 
 8 neurons
-ReLU
+ReLU activation
 
-Dropout:
+Dropout Layer:
 
 20%
 
 Output Layer:
 
-Sigmoid
-Why Dropout?
-
-Dropout randomly deactivates neurons during training.
-
-Benefits:
-
-Prevents overfitting
-Improves generalization
-Makes network more robust
-Model 2 Performance
-
-Training Accuracy:
-
-73% - 75%
-
-Validation Accuracy:
-
-74%
-Interpretation
-
-Slight decrease in training accuracy but improved model robustness.
-
-This indicates:
-
-The model generalizes better on unseen data.
-
+Sigmoid activation
 Model 3
-Features
+Input Features
 Tenure
 MonthlyCharges
 TotalCharges
-Target
-Churn
-Why These Features?
-
-These variables directly represent:
-
-Customer relationship duration
-Monthly spending
-Lifetime customer value
-
-These are highly informative variables for churn prediction.
-
 Architecture
 
 Input Layer:
 
 12 neurons
-ReLU
+ReLU activation
 
 Hidden Layer:
 
 8 neurons
-ReLU
+ReLU activation
 
 Output Layer:
 
-Sigmoid
-Model Evaluation Metrics
+Sigmoid activation
+Why ReLU Activation?
+
+ReLU:
+
+Speeds up training
+Reduces vanishing gradient problem
+Computationally efficient
+Why Sigmoid Activation?
+
+Sigmoid is ideal for binary classification.
+
+Output:
+
+0 = No Churn
+1 = Churn
+Why Dropout?
+
+Dropout:
+
+Prevents overfitting
+Improves model generalization
+Creates robust neural networks
+12. Model Training and Evaluation
 
 The models were evaluated using:
+
+Accuracy
+
+Measures overall prediction correctness.
+
+Formula
+
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
 
 Confusion Matrix
 
@@ -373,121 +353,90 @@ True Positives
 True Negatives
 False Positives
 False Negatives
-Accuracy
-
-Formula:
-
-Accuracy=
-TP+TN+FP+FN
-TP+TN
-	​
-
-
-Measures overall prediction correctness.
-
-Model Comparison
-Metric	Model 1	Model 2	Model 3
-Features	Tenure	Tenure + Dropout	Tenure + MonthlyCharges + TotalCharges
-Accuracy	~75%	~74%	Highest among all models
-Overfitting	Low	Very Low	Low
-Generalization	Good	Better	Best
-Why Model 3 Performs Better
-
-Model 1 only uses:
-
-Tenure
-
-Model 3 uses:
-
-Tenure
-MonthlyCharges
-TotalCharges
-
-More business information allows the model to identify customer behavior patterns more effectively.
-
-Final Model Selection
-Recommended Model
+13. Model Performance Analysis
+Model	Features Used	Approx Accuracy	Generalization
+Model 1	Tenure	~75%	Good
+Model 2	Tenure + Dropout	~74%	Better
+Model 3	Tenure + MonthlyCharges + TotalCharges	Highest	Best
+Model Selection
+Final Selected Model
 
 ✅ Model 3
 
-Reasons:
-
+Reasons
 Uses multiple informative features
 Better predictive capability
-More practical for real-world deployment
-Better understanding of customer behavior
-Business Insights
+Lower bias
+Strong business interpretability
+Better generalization on unseen data
+14. Key Business Insights
 Insight 1
 
-Customers with:
+Customers with lower tenure exhibit the highest churn probability.
 
-Low Tenure
-
-have the highest churn probability.
-
-Recommendation
-
-Introduce:
-
-Welcome offers
-Early engagement campaigns
-Onboarding support
 Insight 2
 
-Customers with:
+Customers with high monthly charges are more likely to churn.
 
-Low Total Spending
-
-show higher churn risk.
-
-Recommendation
-Cross-selling
-Loyalty programs
-Discount bundles
 Insight 3
 
-Fiber customers contribute high revenue but also exhibit high churn.
+Customers with low total spending often leave early.
 
-Recommendation
-Improve service quality
-Provide premium support
-Offer retention discounts
 Insight 4
 
-Senior citizens using mailed checks may require special attention.
+Fiber-optic customers generate high revenue but also show high churn risk.
 
-Recommendation
-Simplify billing
-Personalized support
-Dedicated customer service
-Business Impact
+Insight 5
 
-If implemented, this model can help the company:
+Month-to-month contract customers are more likely to discontinue services.
 
-Reduce Churn
+15. Business Recommendations
+Recommendation 1
 
-Even a 5% reduction can significantly increase profits.
+Develop onboarding programs for new customers.
+
+Recommendation 2
+
+Offer personalized discounts to high-risk customers.
+
+Recommendation 3
+
+Introduce loyalty rewards for long-tenure customers.
+
+Recommendation 4
+
+Improve service quality for fiber-optic customers.
+
+Recommendation 5
+
+Encourage customers to shift toward long-term contracts.
+
+16. Business Impact
+
+Implementing this predictive system can help the company:
+
+Reduce Customer Churn
+
+Even a small reduction in churn can significantly increase profits.
 
 Increase Customer Lifetime Value
 
-Retaining customers:
+Retaining customers increases long-term revenue.
 
-Reduces acquisition costs
-Improves revenue stability
-Enable Proactive Retention
+Reduce Acquisition Costs
 
-Instead of reacting after churn occurs, the company can identify at-risk customers beforehand.
+Customer retention is cheaper than acquiring new customers.
 
-Project Conclusion
+Enable Proactive Decision-Making
 
-This project successfully analyzed telecom customer behavior and developed ANN-based churn prediction models.
+The company can intervene before customers decide to leave.
 
-Major findings:
+17. Conclusion
 
-Churn rate is approximately 27%.
-New customers are more likely to leave.
-Tenure is one of the strongest churn indicators.
-Internet service type influences churn significantly.
-Model 3 produced the best predictive performance.
+This project successfully developed an Artificial Neural Network-based customer churn prediction system for a telecom company.
 
-The project demonstrates how Artificial Neural Networks combined with Exploratory Data Analysis can transform customer data into actionable business intelligence and proactive retention strategies.
+The analysis revealed that customer tenure, monthly charges, and total charges are among the most influential factors affecting churn behavior.
+
+Among all models developed, Model 3 demonstrated the best predictive performance because it incorporated multiple business-relevant features.
+
+The project illustrates how machine learning and deep learning techniques can transform raw customer data into actionable business intelligence, enabling organizations to reduce customer attrition and improve profitability.
